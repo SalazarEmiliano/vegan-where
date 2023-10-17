@@ -5,7 +5,8 @@ const RestaurantDetail = ({ restaurant }) => {
   return (
     <div>
       <h2>{restaurant.name}</h2>
-      <p>{restaurant.address}</p>
+      <p>Address: {restaurant.address}</p>
+       <p>Location: {restaurant.location.address}</p>
       <p>Rating: {restaurant.rating}</p>
     </div>
   );

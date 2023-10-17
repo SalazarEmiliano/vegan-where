@@ -1,11 +1,11 @@
-// App.js
+// Home.js
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import RestaurantList from './RestaurantList';
 import RestaurantDetail from './RestaurantDetail';
 import axios from 'axios';
 
-const App = () => {
+const Home = () => {
   const [location, setLocation] = useState('');
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
@@ -93,7 +93,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Vegan Restaurant Finder</h1>
+      <h2>Home</h2>
       <SearchBar onSearch={handleSearch} />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {loading && <p>Loading...</p>}
@@ -106,4 +106,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
