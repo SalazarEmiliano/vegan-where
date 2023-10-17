@@ -19,6 +19,8 @@ const RestaurantDetail = ({ restaurant }) => {
       <p>Categories: {restaurant.categories.map(category => category.title).join(', ')}</p>
       <a href={restaurant.url}>More about this place</a>
       <p>Display address: {restaurant.location.display_address.join(', ')}</p>
+      <p>coordinates: {restaurant.coordinates.latitude}</p>
+      <p>coordinates: {restaurant.coordinates.longitude}</p>
     </div>
   );
 };

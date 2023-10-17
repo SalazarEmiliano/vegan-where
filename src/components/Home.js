@@ -1,7 +1,9 @@
+// Home.js
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import RestaurantList from './RestaurantList';
 import RestaurantDetail from './RestaurantDetail';
+import Map from './Map'; // Import the Map component
 import axios from 'axios';
 import Header from './Header';
 
@@ -13,22 +15,21 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
   const yelpApiKey = 'R8WSkYG06Wtag3IPuiRtKmiO0GPVz3gTJ5YJDHn8PXuXmmhZPG91_YPXdbEHwOoLonoHF8_vJpHoxjD2ZjsD4zdpQlGMq7bRwB5HBrQcCWH7Kc7GyvcbeDsV2HcoZXYx';
+  const [mapCenter, setMapCenter] = useState([48.104796, 11.588756]); // Initial center
 
   const handleSearch = async (newLocation, coordinates) => {
     setLocation(newLocation);
     setSelectedRestaurant(null);
 
-    // Check if the search bar is cleared
     if (newLocation.trim() === '' && (!coordinates || !coordinates.latitude || !coordinates.longitude)) {
       setRestaurants([]);
-      setSearched(false); // Reset the searched flag
-      return; // Exit early if the location is empty
+      setSearched(false);
+      return;
     }
 
     try {
       let searchLocation = newLocation;
 
-      // Use the coordinates if available
       if (coordinates && coordinates.latitude && coordinates.longitude) {
         searchLocation = `${coordinates.latitude},${coordinates.longitude}`;
       }
@@ -48,16 +49,20 @@ const Home = () => {
       if (response.status === 200) {
         const allRestaurants = response.data;
 
-        // Filter for vegan restaurants
         const veganRestaurants = allRestaurants.filter((restaurant) =>
           restaurant.categories.some((category) => category.title.toLowerCase() === 'vegan')
         );
 
-        // Apply additional limit
-        const limitedVeganRestaurants = veganRestaurants.slice(0, 20); // Adjust the limit
+        const limitedVeganRestaurants = veganRestaurants.slice(0, 20);
 
         setRestaurants(limitedVeganRestaurants);
         setSearched(true);
+
+        // Update the map center based on the first valid restaurant
+        if (limitedVeganRestaurants.length > 0) {
+          const firstRestaurant = limitedVeganRestaurants[0];
+          setMapCenter([firstRestaurant.coordinates.latitude, firstRestaurant.coordinates.longitude]);
+        }
       } else {
         setError('City not found. Please try a different location.');
       }
@@ -70,19 +75,14 @@ const Home = () => {
 
   const handleDetectLocation = async () => {
     try {
-      // Get the user's location using the Geolocation API
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
 
-            // Use the detected location in your search logic
             console.log('Detected Location:', { latitude, longitude });
 
-            // Trigger a search with the detected coordinates
             await handleSearch(location, { latitude, longitude });
-
-            // Rest of your code here...
           },
           (error) => {
             console.error('Error getting location:', error);
@@ -103,7 +103,6 @@ const Home = () => {
     const selected = restaurants.find((restaurant) => restaurant.id === restaurantId);
     setSelectedRestaurant(selected);
 
-    // Fetch detailed information using the Yelp API and the selected restaurant ID
     try {
       const response = await axios.get(`https://api.yelp.com/v3/businesses/${restaurantId}`, {
         headers: {
@@ -114,7 +113,6 @@ const Home = () => {
       const detailedRestaurant = response.data;
       console.log('Detailed Restaurant:', detailedRestaurant);
       console.log('Response:', response);
-      // Handle the detailed restaurant data as needed
     } catch (error) {
       console.error('Error fetching detailed information:', error);
     }
@@ -146,16 +144,20 @@ const Home = () => {
         if (response.status === 200) {
           const allRestaurants = response.data;
 
-          // Filter for vegan restaurants
           const veganRestaurants = allRestaurants.filter((restaurant) =>
             restaurant.categories.some((category) => category.title.toLowerCase() === 'vegan')
           );
 
-          // Apply additional limit
-          const limitedVeganRestaurants = veganRestaurants.slice(0, 20); // Adjust the limit
+          const limitedVeganRestaurants = veganRestaurants.slice(0, 20);
 
           setRestaurants(limitedVeganRestaurants);
           setSearched(true);
+
+          // Update the map center based on the first valid restaurant
+          if (limitedVeganRestaurants.length > 0) {
+            const firstRestaurant = limitedVeganRestaurants[0];
+            setMapCenter([firstRestaurant.coordinates.latitude, firstRestaurant.coordinates.longitude]);
+          }
         } else {
           setError('City not found. Please try a different location.');
         }
@@ -167,17 +169,14 @@ const Home = () => {
     };
 
     if (location.trim() !== '') {
-      // Clear the previous timeout
       clearTimeout(timeoutId);
 
-      // Set a new timeout to wait for the user to stop typing
       timeoutId = setTimeout(() => {
         fetchData();
-      }, 500); // Adjust the delay as needed (e.g., 500 milliseconds)
+      }, 500);
     }
 
     return () => {
-      // Cleanup: clear the timeout when the component unmounts or location changes
       clearTimeout(timeoutId);
     };
   }, [location]);
@@ -194,6 +193,7 @@ const Home = () => {
       )}
       <RestaurantList restaurants={restaurants} onRestaurantClick={handleRestaurantClick} />
       {selectedRestaurant && <RestaurantDetail restaurant={selectedRestaurant} />}
+      <Map center={mapCenter} restaurants={restaurants} />
     </div>
   );
 };
