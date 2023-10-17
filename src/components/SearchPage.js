@@ -71,7 +71,7 @@ const SearchPage = () => {
       // Set a new timeout to wait for the user to stop typing
       timeoutId = setTimeout(() => {
         fetchData();
-      }, 500); // Adjust the delay as needed (e.g., 500 milliseconds)
+      }, 500); // Adjust the delay
     }
 
     return () => {

@@ -15,7 +15,7 @@ const App = () => (
       <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/search" element={<SearchPage />} /> {/* Use the SearchPage component */}
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/restaurants" element={<RestaurantList />} />
         <Route path="/detail/:id" element={<RestaurantDetail />} />
         <Route path="/about" element={<About />} />

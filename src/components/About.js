@@ -3,8 +3,9 @@ import React from 'react';
 
 const About = () => (
   <div>
-    <h2>About</h2>
-    <p>This is the About page. Welcome!</p>
+    <h2>About this site</h2>
+    <p>This website was made using React for the final project of ReDI School, Autumn 2023.</p>
+    <p>Emiliano Salazar</p>
   </div>
 );
 

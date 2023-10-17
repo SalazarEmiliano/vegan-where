@@ -13,6 +13,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
+  const yelpApiKey = 'R8WSkYG06Wtag3IPuiRtKmiO0GPVz3gTJ5YJDHn8PXuXmmhZPG91_YPXdbEHwOoLonoHF8_vJpHoxjD2ZjsD4zdpQlGMq7bRwB5HBrQcCWH7Kc7GyvcbeDsV2HcoZXYx';
 
   const handleSearch = (newLocation) => {
     setLocation(newLocation);
@@ -22,6 +23,28 @@ const Home = () => {
     if (newLocation.trim() === '') {
       setRestaurants([]);
       setSearched(false); // Reset the searched flag
+    }
+  };
+
+  const handleRestaurantClick = async (restaurantId) => {
+    const selected = restaurants.find((restaurant) => restaurant.id === restaurantId);
+    setSelectedRestaurant(selected);
+
+    // Fetch detailed information using the Yelp API and the selected restaurant ID
+    try {
+      const response = await axios.get(`https://api.yelp.com/v3/businesses/${restaurantId}`, {
+        headers: {
+          Authorization: `Bearer ${yelpApiKey}`,
+        },
+      });
+      
+
+      const detailedRestaurant = response.data;
+      console.log('Detailed Restaurant:', detailedRestaurant);
+      console.log('Response:', response);
+      // Handle the detailed restaurant data as needed
+    } catch (error) {
+      console.error('Error fetching detailed information:', error);
     }
   };
 
@@ -56,8 +79,8 @@ const Home = () => {
             restaurant.categories.some((category) => category.title.toLowerCase() === 'vegan')
           );
 
-          // Apply additional limit if needed
-          const limitedVeganRestaurants = veganRestaurants.slice(0, 20); // Adjust the limit as needed
+          // Apply additional limit
+          const limitedVeganRestaurants = veganRestaurants.slice(0, 20); // Adjust the limit
 
           setRestaurants(limitedVeganRestaurants);
           setSearched(true);
@@ -86,11 +109,6 @@ const Home = () => {
       clearTimeout(timeoutId);
     };
   }, [location]);
-
-  const handleRestaurantClick = (restaurantId) => {
-    const selected = restaurants.find((restaurant) => restaurant.id === restaurantId);
-    setSelectedRestaurant(selected);
-  };
 
   return (
     <div>
