@@ -1,15 +1,27 @@
 // SearchBar.js
-import React from 'react';
+import React, { useState } from 'react';
 
-const SearchBar = ({ onSearch }) => {
-  const handleSearch = (e) => {
-    const location = e.target.value;
-    onSearch(location);
+const SearchBar = ({ onSearch, onLocationDetect }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = () => {
+    onSearch(searchTerm);
+  };
+
+  const handleDetectLocation = () => {
+    onLocationDetect(); // Call the function passed from the parent component
   };
 
   return (
     <div>
-      <input type="text" placeholder="Enter location" onChange={handleSearch} />
+      <input
+        type="text"
+        placeholder="Search for restaurants..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
+      <button onClick={handleDetectLocation}>Detect Location</button>
     </div>
   );
 };
