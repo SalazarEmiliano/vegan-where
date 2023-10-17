@@ -1,22 +1,18 @@
-// Home.js
+// SearchPage.js
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import RestaurantList from './RestaurantList';
-import RestaurantDetail from './RestaurantDetail';
 import axios from 'axios';
-import Header from './Header';
 
-const Home = () => {
+const SearchPage = () => {
   const [location, setLocation] = useState('');
   const [restaurants, setRestaurants] = useState([]);
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
 
-  const handleSearch = (newLocation) => {
+  const handleSearch = async (newLocation) => {
     setLocation(newLocation);
-    setSelectedRestaurant(null);
 
     // Check if the search bar is cleared
     if (newLocation.trim() === '') {
@@ -44,7 +40,7 @@ const Home = () => {
           params: {
             term: 'vegan',
             location,
-            limit: 50,
+            limit: 20, // Adjust the limit as needed
           },
         });
 
@@ -56,10 +52,7 @@ const Home = () => {
             restaurant.categories.some((category) => category.title.toLowerCase() === 'vegan')
           );
 
-          // Apply additional limit if needed
-          const limitedVeganRestaurants = veganRestaurants.slice(0, 20); // Adjust the limit as needed
-
-          setRestaurants(limitedVeganRestaurants);
+          setRestaurants(veganRestaurants);
           setSearched(true);
         } else {
           setError('City not found. Please try a different location.');
@@ -87,25 +80,19 @@ const Home = () => {
     };
   }, [location]);
 
-  const handleRestaurantClick = (restaurantId) => {
-    const selected = restaurants.find((restaurant) => restaurant.id === restaurantId);
-    setSelectedRestaurant(selected);
-  };
-
   return (
     <div>
-      <Header />
-      <h2>Home</h2>
+      <h2>Search Page</h2>
       <SearchBar onSearch={handleSearch} />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
       {loading && <p>Loading...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       {searched && restaurants.length === 0 && !loading && !error && (
         <p>No restaurants found. Please try a different location.</p>
       )}
-      <RestaurantList restaurants={restaurants} onRestaurantClick={handleRestaurantClick} />
-      {selectedRestaurant && <RestaurantDetail restaurant={selectedRestaurant} />}
+      {searched && restaurants.length > 0 && <RestaurantList restaurants={restaurants} />}
+      {/* Add other components or information related to the search page */}
     </div>
   );
 };
 
-export default Home;
+export default SearchPage;
