@@ -172,11 +172,11 @@ const handleDetectLocation = async () => {
       }
     };
 
-    const miliseconds = 500;
+    
 
     if (location.trim() !== '') {
       clearTimeout(timeoutId);
-
+      const miliseconds = 500;
       timeoutId = setTimeout(() => {
         fetchData();
       }, miliseconds);
