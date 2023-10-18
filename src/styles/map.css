@@ -1,5 +1,9 @@
 /* Map.css */
 .marker-selected {
-  opacity: 1 !important;
-  transform: scale(1.8) !important;
+  opacity: 1;
+  transform: scale(1.8);
+}
+
+.map-icon {
+  border-radius: 50%;
 }

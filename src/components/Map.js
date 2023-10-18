@@ -41,6 +41,7 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
 
     // Use a custom icon with a fallback image
     return new L.Icon({
+      className: "map-icon",
       iconUrl: image_url,
       iconSize: [32, 32],
       iconAnchor: [16, 32],
@@ -69,6 +70,7 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
                 icon={
                   highlightedRestaurantId === restaurant.id
                     ? L.icon({
+                        className: "map-icon marker-selected",
                         iconUrl: restaurant.image_url,
                         iconSize: [50, 50],
                         iconAnchor: [20, 40],
