@@ -181,6 +181,10 @@ const Home = () => {
     };
   }, [location]);
 
+    const handleMarkerClick = (restaurant) => {
+    setSelectedRestaurant(restaurant);
+  };
+
   return (
     <div>
       <Header />
@@ -193,7 +197,7 @@ const Home = () => {
       )}
       <RestaurantList restaurants={restaurants} onRestaurantClick={handleRestaurantClick} />
       {selectedRestaurant && <RestaurantDetail restaurant={selectedRestaurant} />}
-      <Map center={mapCenter} restaurants={restaurants} />
+      <Map center={mapCenter} restaurants={restaurants} onMarkerClick={handleMarkerClick} />
     </div>
   );
 };

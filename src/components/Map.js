@@ -1,35 +1,51 @@
-import React, { useEffect } from 'react';
+// Map.js
+import React, { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
 import L from 'leaflet';
 
-// Fallback icon for markers
-const fallbackIcon = new L.Icon({
-  iconUrl: 'path-to-fallback-icon.png', // Replace with the path to your fallback icon
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-  popupAnchor: [0, -32],
-});
+const Map = ({ center, restaurants, onMarkerClick }) => {
+  const mapRef = useRef(null);
 
-const Map = ({ center, restaurants }) => {
   useEffect(() => {
-  // Check if there are restaurants with valid coordinates
-  const validRestaurants = restaurants.filter(
-    (restaurant) =>
-      restaurant.coordinates &&
-      restaurant.coordinates.latitude !== null &&
-      restaurant.coordinates.longitude !== null
-  );
+    // Check if there are restaurants with valid coordinates
+    const validRestaurants = restaurants.filter(
+      (restaurant) =>
+        restaurant.coordinates &&
+        restaurant.coordinates.latitude !== null &&
+        restaurant.coordinates.longitude !== null
+    );
 
-  // Update the center based on the first valid restaurant
-  if (validRestaurants.length > 0 && mapRef.current) {
-    const firstRestaurant = validRestaurants[0];
-    mapRef.current.setView([firstRestaurant.coordinates.latitude, firstRestaurant.coordinates.longitude], 13);
-  }
-}, [center, restaurants]);
+    // Update the center based on the first valid restaurant
+    if (validRestaurants.length > 0 && mapRef.current) {
+      const firstRestaurant = validRestaurants[0];
+      mapRef.current.setView(
+        [firstRestaurant.coordinates.latitude, firstRestaurant.coordinates.longitude],
+        13
+      );
+    }
+  }, [center, restaurants]);
 
-const mapRef = React.useRef(null);
+  const createCustomIcon = (restaurant) => {
+    const { image_url } = restaurant;
 
+    // Use the default Leaflet icon if no image URL is provided
+    if (!image_url) {
+      return L.icon();
+    }
+
+    // Use a custom icon with a fallback image
+    return new L.Icon({
+      iconUrl: image_url,
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    });
+  };
+
+  const handleMarkerClick = (restaurant) => {
+    onMarkerClick(restaurant);
+  };
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', overflow: 'hidden' }}>
@@ -43,7 +59,17 @@ const mapRef = React.useRef(null);
             restaurant.coordinates &&
             restaurant.coordinates.latitude !== null &&
             restaurant.coordinates.longitude !== null ? (
-              <Marker key={restaurant.id} position={[restaurant.coordinates.latitude, restaurant.coordinates.longitude]} icon={createCustomIcon(restaurant)}>
+              <Marker
+                key={restaurant.id}
+                position={[
+                  restaurant.coordinates.latitude,
+                  restaurant.coordinates.longitude,
+                ]}
+                icon={createCustomIcon(restaurant)}
+                eventHandlers={{
+                  click: () => handleMarkerClick(restaurant),
+                }}  
+              >
                 {/* You can customize the marker as needed */}
               </Marker>
             ) : null
@@ -51,25 +77,6 @@ const mapRef = React.useRef(null);
       </MapContainer>
     </div>
   );
-};
-
-// Function to create a custom icon for markers with fallback
-const createCustomIcon = (restaurant) => {
-  const { image_url } = restaurant;
-
-  // Use the default Leaflet icon if no image URL is provided
-  if (!image_url) {
-    return L.icon();
-  }
-
-  // Use a custom icon with a fallback image
-  return new L.Icon({
-    iconUrl: image_url,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32],
-    errorUrl: fallbackIcon.options.iconUrl,
-  });
 };
 
 export default Map;
