@@ -1,0 +1,5 @@
+/* Map.css */
+.marker-selected {
+  opacity: 1 !important;
+  transform: scale(1.8) !important;
+}

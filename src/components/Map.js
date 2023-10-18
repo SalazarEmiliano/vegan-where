@@ -1,14 +1,15 @@
 // Map.js
+
 import React, { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
+import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import '../styles/map.css';
 
-const Map = ({ center, restaurants, onMarkerClick }) => {
+const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    // Check if there are restaurants with valid coordinates
     const validRestaurants = restaurants.filter(
       (restaurant) =>
         restaurant.coordinates &&
@@ -26,6 +27,10 @@ const Map = ({ center, restaurants, onMarkerClick }) => {
     }
   }, [center, restaurants]);
 
+  const handleMarkerClick = (restaurant) => {
+    onMarkerClick(restaurant);
+  };
+
   const createCustomIcon = (restaurant) => {
     const { image_url } = restaurant;
 
@@ -41,10 +46,6 @@ const Map = ({ center, restaurants, onMarkerClick }) => {
       iconAnchor: [16, 32],
       popupAnchor: [0, -32],
     });
-  };
-
-  const handleMarkerClick = (restaurant) => {
-    onMarkerClick(restaurant);
   };
 
   return (
@@ -65,12 +66,20 @@ const Map = ({ center, restaurants, onMarkerClick }) => {
                   restaurant.coordinates.latitude,
                   restaurant.coordinates.longitude,
                 ]}
-                icon={createCustomIcon(restaurant)}
+                icon={
+                  highlightedRestaurantId === restaurant.id
+                    ? L.icon({
+                        iconUrl: restaurant.image_url,
+                        iconSize: [50, 50],
+                        iconAnchor: [20, 40],
+                        popupAnchor: [0, -40],
+                      })
+                    : createCustomIcon(restaurant)
+                }
                 eventHandlers={{
                   click: () => handleMarkerClick(restaurant),
-                }}  
+                }}
               >
-                {/* You can customize the marker as needed */}
               </Marker>
             ) : null
         )}

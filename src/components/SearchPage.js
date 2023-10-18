@@ -12,7 +12,6 @@ const SearchPage = ({ onLocationDetect }) => {
   const [searched, setSearched] = useState(false);
 
   const handleSearch = async (newLocation) => {
-    // Check if the search bar is cleared
     if (newLocation.trim() === '') {
       setRestaurants([]);
       setSearched(false); // Reset the searched flag
@@ -22,24 +21,17 @@ const SearchPage = ({ onLocationDetect }) => {
     try {
       let searchLocation = newLocation;
 
-      // Use the detected location if needed
-      // const coordinates = await detectLocation();
-      // if (coordinates && coordinates.latitude && coordinates.longitude) {
-      //   searchLocation = `${coordinates.latitude},${coordinates.longitude}`;
-      // }
-
       const response = await axios.get(`http://localhost:5000/api/yelp`, {
         params: {
           term: 'vegan',
           location: searchLocation,
-          limit: 20, // Adjust the limit as needed
+          limit: 20,
         },
       });
 
       if (response.status === 200) {
         const allRestaurants = response.data;
-
-        // Filter for vegan restaurants
+        
         const veganRestaurants = allRestaurants.filter((restaurant) =>
           restaurant.categories.some((category) => category.title.toLowerCase() === 'vegan')
         );
@@ -57,20 +49,15 @@ const SearchPage = ({ onLocationDetect }) => {
   };
 
   const handleDetectLocation = async () => {
-    try {
-      // Get the user's location using the Geolocation API
+    try {      
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
-
-            // Use the detected location in your search logic
+            
             console.log('Detected Location:', { latitude, longitude });
 
-            // Trigger a search with the detected coordinates
             await handleSearch(`${latitude},${longitude}`);
-
-            // Rest of your code here...
           },
           (error) => {
             console.error('Error getting location:', error);
@@ -88,11 +75,10 @@ const SearchPage = ({ onLocationDetect }) => {
   };
 
   useEffect(() => {
-    // Trigger search when coordinates change
     // if (coordinates && coordinates.latitude && coordinates.longitude) {
     //   handleSearch(`${coordinates.latitude},${coordinates.longitude}`);
     // }
-  }, []); // Include any dependencies if needed
+  }, []);
 
   return (
     <div>

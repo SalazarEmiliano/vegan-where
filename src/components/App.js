@@ -4,15 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './Navigation';
 import Home from './Home';
 import About from './About';
-import SearchPage from './SearchPage';  // Import the new SearchPage component
+import SearchPage from './SearchPage';
 import RestaurantList from './RestaurantList';
 import RestaurantDetail from './RestaurantDetail';
 import '../styles/app.css';
 
 const App = () => {
-  // Define your onLocationDetect function here
   const handleLocationDetect = () => {
-    // Implement your location detection logic here
     console.log('Location detected!');
   };
 

@@ -9,7 +9,7 @@ const SearchBar = ({ onSearch, onLocationDetect }) => {
   };
 
   const handleDetectLocation = () => {
-    onLocationDetect(); // Call the function passed from the parent component
+    onLocationDetect();
   };
 
   return (

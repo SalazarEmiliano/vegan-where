@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import RestaurantList from './RestaurantList';
 import RestaurantDetail from './RestaurantDetail';
-import Map from './Map'; // Import the Map component
+import Map from './Map';
 import axios from 'axios';
 import Header from './Header';
 
@@ -16,6 +16,8 @@ const Home = () => {
   const [searched, setSearched] = useState(false);
   const yelpApiKey = 'R8WSkYG06Wtag3IPuiRtKmiO0GPVz3gTJ5YJDHn8PXuXmmhZPG91_YPXdbEHwOoLonoHF8_vJpHoxjD2ZjsD4zdpQlGMq7bRwB5HBrQcCWH7Kc7GyvcbeDsV2HcoZXYx';
   const [mapCenter, setMapCenter] = useState([48.104796, 11.588756]); // Initial center
+    const [highlightedRestaurantId, setHighlightedRestaurantId] = useState(null); // Add this line
+
 
   const handleSearch = async (newLocation, coordinates) => {
     setLocation(newLocation);
@@ -73,35 +75,37 @@ const Home = () => {
     }
   };
 
-  const handleDetectLocation = async () => {
-    try {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
+const handleDetectLocation = async () => {
+  try {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
 
-            console.log('Detected Location:', { latitude, longitude });
+          console.log('Detected Location:', { latitude, longitude });
 
-            await handleSearch(location, { latitude, longitude });
-          },
-          (error) => {
-            console.error('Error getting location:', error);
-            setError('Error getting location. Please try again or enter a location manually.');
-          }
-        );
-      } else {
-        console.error('Geolocation is not supported by this browser');
-        setError('Geolocation is not supported by this browser.');
-      }
-    } catch (error) {
-      console.error('Error detecting location:', error);
-      setError('Error detecting location. Please try again or enter a location manually.');
+          await handleSearch(`${latitude},${longitude}`);
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          setError('Error getting location. Please try again or enter a location manually.');
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser');
+      setError('Geolocation is not supported by this browser.');
     }
-  };
+  } catch (error) {
+    console.error('Error detecting location:', error);
+    setError('Error detecting location. Please try again or enter a location manually.');
+  }
+};
+
 
   const handleRestaurantClick = async (restaurantId) => {
     const selected = restaurants.find((restaurant) => restaurant.id === restaurantId);
     setSelectedRestaurant(selected);
+    setHighlightedRestaurantId(restaurantId);
 
     try {
       const response = await axios.get(`https://api.yelp.com/v3/businesses/${restaurantId}`, {
@@ -168,12 +172,14 @@ const Home = () => {
       }
     };
 
+    const miliseconds = 500;
+
     if (location.trim() !== '') {
       clearTimeout(timeoutId);
 
       timeoutId = setTimeout(() => {
         fetchData();
-      }, 500);
+      }, miliseconds);
     }
 
     return () => {
@@ -183,6 +189,7 @@ const Home = () => {
 
     const handleMarkerClick = (restaurant) => {
     setSelectedRestaurant(restaurant);
+    setHighlightedRestaurantId(restaurant.id);
   };
 
   return (
@@ -197,7 +204,7 @@ const Home = () => {
       )}
       <RestaurantList restaurants={restaurants} onRestaurantClick={handleRestaurantClick} />
       {selectedRestaurant && <RestaurantDetail restaurant={selectedRestaurant} />}
-      <Map center={mapCenter} restaurants={restaurants} onMarkerClick={handleMarkerClick} />
+      <Map center={mapCenter} restaurants={restaurants} selectedRestaurant={selectedRestaurant} highlightedRestaurantId={highlightedRestaurantId} onMarkerClick={handleMarkerClick} />
     </div>
   );
 };
