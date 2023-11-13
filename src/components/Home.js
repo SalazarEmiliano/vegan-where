@@ -6,6 +6,7 @@ import RestaurantDetail from './RestaurantDetail';
 import Map from './Map';
 import axios from 'axios';
 import Header from './Header';
+import { API_BASE_URL } from './config';
 
 const Home = () => {
   const [location, setLocation] = useState('');
@@ -38,7 +39,7 @@ const Home = () => {
 
       console.log('Search Location:', searchLocation);
 
-      const response = await axios.get(`http://localhost:5000/api/yelp`, {
+      const response = await axios.get(`${API_BASE_URL}/yelp`, {
         params: {
           term: 'vegan',
           location: searchLocation,
@@ -137,7 +138,7 @@ const handleDetectLocation = async () => {
           return;
         }
 
-        const response = await axios.get(`http://localhost:5000/api/yelp`, {
+        const response = await axios.get(`${API_BASE_URL}/yelp`, {
           params: {
             term: 'vegan',
             location,
