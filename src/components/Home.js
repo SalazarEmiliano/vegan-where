@@ -102,25 +102,30 @@ const Home = () => {
     }
   };
 
-  const handleRestaurantClick = async (restaurantId) => {
+const handleRestaurantClick = async (restaurantId) => {
+  if (selectedRestaurant && selectedRestaurant.id === restaurantId) {
+    setSelectedRestaurant(null);
+    setHighlightedRestaurantId(null);
+  } else {
     const selected = restaurants.find((restaurant) => restaurant.id === restaurantId);
     setSelectedRestaurant(selected);
     setHighlightedRestaurantId(restaurantId);
 
     try {
-      const response = await axios.get(`https://api.yelp.com/v3/businesses/${restaurantId}`, {
-        headers: {
-          Authorization: `Bearer ${yelpApiKey}`,
-        },
-      });
-
+      const response = await axios.get(`${API_BASE_URL}/yelp/${restaurantId}`);
       const detailedRestaurant = response.data;
+
+      setSelectedRestaurant(detailedRestaurant);
+      setHighlightedRestaurantId(restaurantId);
+
       console.log('Detailed Restaurant:', detailedRestaurant);
       console.log('Response:', response);
     } catch (error) {
       console.error('Error fetching detailed information:', error);
     }
-  };
+  }
+};
+
 
   const handleClear = () => {
     setLocation('');
