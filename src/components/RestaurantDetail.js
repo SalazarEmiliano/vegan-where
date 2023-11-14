@@ -11,16 +11,13 @@ const RestaurantDetail = ({ restaurant }) => {
       <p>State: {restaurant.location.state}</p>
       <p>Zip Code: {restaurant.location.zip_code}</p>
       <p>Country: {restaurant.location.country}</p>
+      <p>Full address: {restaurant.location.display_address.join(', ')}</p>
       <p>Rating: {restaurant.rating}</p>
       <p>Price: {restaurant.price}</p>
       <p>Phone: {restaurant.phone}</p>
-      <p>Distance: {restaurant.distance}</p>
       <img src={restaurant.image_url} alt={restaurant.name} style={{ maxWidth: '100%', height: 'auto' }} />
       <p>Categories: {restaurant.categories.map(category => category.title).join(', ')}</p>
-      <a href={restaurant.url}>More about this place</a>
-      <p>Display address: {restaurant.location.display_address.join(', ')}</p>
-      <p>coordinates: {restaurant.coordinates.latitude}</p>
-      <p>coordinates: {restaurant.coordinates.longitude}</p>
+      <a href={restaurant.url}>More about this place</a>      
     </div>
   );
 };

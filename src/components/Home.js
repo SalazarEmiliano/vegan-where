@@ -112,7 +112,10 @@ const handleRestaurantClick = async (restaurantId) => {
     setHighlightedRestaurantId(restaurantId);
 
     try {
-      const response = await axios.get(`${API_BASE_URL}/yelp/${restaurantId}`);
+      const headers = {
+        Authorization: `Bearer ${yelpApiKey}`,
+      };
+      const response = await axios.get(`${API_BASE_URL}/yelp/${restaurantId}`, { headers });
       const detailedRestaurant = response.data;
 
       setSelectedRestaurant(detailedRestaurant);
