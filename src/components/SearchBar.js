@@ -1,7 +1,7 @@
 // SearchBar.js
 import React, { useState } from 'react';
 
-const SearchBar = ({ onSearch, onLocationDetect }) => {
+const SearchBar = ({ onSearch, onLocationDetect, onClear }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = () => {
@@ -10,6 +10,11 @@ const SearchBar = ({ onSearch, onLocationDetect }) => {
 
   const handleDetectLocation = () => {
     onLocationDetect();
+  };
+
+  const handleClear = () => {
+    setSearchTerm('');
+    onClear();
   };
 
   return (
@@ -22,6 +27,7 @@ const SearchBar = ({ onSearch, onLocationDetect }) => {
       />
       <button onClick={handleSearch}>Search</button>
       <button onClick={handleDetectLocation}>Detect Location</button>
+      <button onClick={handleClear}>Clear</button>
     </div>
   );
 };

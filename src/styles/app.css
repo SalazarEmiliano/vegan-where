@@ -36,3 +36,132 @@
     transform: rotate(360deg);
   }
 }
+
+/* app.css */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4; /* Light gray background */
+}
+
+/* Header styles */
+h1 {
+  text-align: center;
+  color: #2ecc71; /* Emerald green */
+  margin: 20px 0;
+}
+
+/* Home page styles */
+#home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* SearchBar styles */
+input {
+  padding: 10px;
+  font-size: 16px;
+  width: 60%;
+  margin-right: 10px;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #2ecc71; /* Emerald green */
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+/* RestaurantList styles */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 10px 0;
+  padding: 20px;
+  background-color: #fff; /* White background */
+  border: 1px solid #ddd; /* Light gray border */
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+/* RestaurantDetail styles */
+.restaurant-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #fff; /* White background */
+  padding: 20px;
+  border: 1px solid #ddd; /* Light gray border */
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+/* Navigation styles */
+nav {
+  background-color: #333; /* Dark background color */
+  padding: 10px 20px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+a {
+  display: block;
+  color: white; /* Light text color */
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: #555; /* Darker background on hover */
+}
+
+/* Header styles */
+h1 {
+  text-align: center;
+  color: #2ecc71; /* Emerald green */
+  margin: 20px 0;
+}
+
+/* Home page styles */
+#home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Map styles */
+#map-container {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff; /* White background */
+  padding: 20px;
+  border: 1px solid #ddd; /* Light gray border */
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+  input {
+    width: 100%;
+    margin-right: 0;
+  }
+}

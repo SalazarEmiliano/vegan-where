@@ -15,9 +15,9 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
+  const [mapCenter, setMapCenter] = useState([48.104796, 11.588756]);
+  const [highlightedRestaurantId, setHighlightedRestaurantId] = useState(null);
   const yelpApiKey = 'R8WSkYG06Wtag3IPuiRtKmiO0GPVz3gTJ5YJDHn8PXuXmmhZPG91_YPXdbEHwOoLonoHF8_vJpHoxjD2ZjsD4zdpQlGMq7bRwB5HBrQcCWH7Kc7GyvcbeDsV2HcoZXYx';
-  const [mapCenter, setMapCenter] = useState([48.104796, 11.588756]); // Initial center
-    const [highlightedRestaurantId, setHighlightedRestaurantId] = useState(null); // Add this line
 
 
   const handleSearch = async (newLocation, coordinates) => {
@@ -76,32 +76,31 @@ const Home = () => {
     }
   };
 
-const handleDetectLocation = async () => {
-  try {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
+  const handleDetectLocation = async () => {
+    try {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
 
-          console.log('Detected Location:', { latitude, longitude });
+            console.log('Detected Location:', { latitude, longitude });
 
-          await handleSearch(`${latitude},${longitude}`);
-        },
-        (error) => {
-          console.error('Error getting location:', error);
-          setError('Error getting location. Please try again or enter a location manually.');
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser');
-      setError('Geolocation is not supported by this browser.');
+            await handleSearch(`${latitude},${longitude}`);
+          },
+          (error) => {
+            console.error('Error getting location:', error);
+            setError('Error getting location. Please try again or enter a location manually.');
+          }
+        );
+      } else {
+        console.error('Geolocation is not supported by this browser');
+        setError('Geolocation is not supported by this browser.');
+      }
+    } catch (error) {
+      console.error('Error detecting location:', error);
+      setError('Error detecting location. Please try again or enter a location manually.');
     }
-  } catch (error) {
-    console.error('Error detecting location:', error);
-    setError('Error detecting location. Please try again or enter a location manually.');
-  }
-};
-
+  };
 
   const handleRestaurantClick = async (restaurantId) => {
     const selected = restaurants.find((restaurant) => restaurant.id === restaurantId);
@@ -121,6 +120,17 @@ const handleDetectLocation = async () => {
     } catch (error) {
       console.error('Error fetching detailed information:', error);
     }
+  };
+
+  const handleClear = () => {
+    setLocation('');
+    setRestaurants([]);
+    setSelectedRestaurant(null);
+    setLoading(false);
+    setError(null);
+    setSearched(false);
+    setMapCenter([48.104796, 11.588756]);
+    setHighlightedRestaurantId(null);
   };
 
   useEffect(() => {
@@ -173,8 +183,6 @@ const handleDetectLocation = async () => {
       }
     };
 
-    
-
     if (location.trim() !== '') {
       clearTimeout(timeoutId);
       const miliseconds = 500;
@@ -188,7 +196,7 @@ const handleDetectLocation = async () => {
     };
   }, [location]);
 
-    const handleMarkerClick = (restaurant) => {
+  const handleMarkerClick = (restaurant) => {
     setSelectedRestaurant(restaurant);
     setHighlightedRestaurantId(restaurant.id);
   };
@@ -197,14 +205,14 @@ const handleDetectLocation = async () => {
     <div>
       <Header />
       <h2>Home</h2>
-      <SearchBar onSearch={handleSearch} onLocationDetect={handleDetectLocation} />
+      <SearchBar onSearch={handleSearch} onLocationDetect={handleDetectLocation} onClear={handleClear} />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {loading && <p>Loading...</p>}
       {searched && restaurants.length === 0 && !loading && !error && (
         <p>No restaurants found. Please try a different location.</p>
       )}
       <RestaurantList restaurants={restaurants} onRestaurantClick={handleRestaurantClick} />
-      {selectedRestaurant && <RestaurantDetail restaurant={selectedRestaurant} />}
+      {selectedRestaurant && <RestaurantDetail restaurant={selectedRestaurant} onClear={handleClear} />}
       <Map center={mapCenter} restaurants={restaurants} selectedRestaurant={selectedRestaurant} highlightedRestaurantId={highlightedRestaurantId} onMarkerClick={handleMarkerClick} />
     </div>
   );
