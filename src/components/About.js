@@ -1,8 +1,12 @@
 // About.js
 import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
 
-const About = () => (
-  <div>
+const About = () => {
+  return(
+    <div>
+      <Header />
     <h2>Vegan? Why?</h2>
     <h3>For the animals</h3>
     <p>Preventing the exploitation of animals is not the only reason for becoming vegan, but for many it remains the key factor in their decision to go vegan and stay vegan. Having emotional attachments with animals may form part of that reason, while many believe that all sentient creatures have a right to life and freedom. Specifics aside, avoiding animal products is one of the most obvious ways you can take a stand against animal cruelty and animal exploitation everywhere.</p>
@@ -23,9 +27,10 @@ const About = () => (
       Just like veganism is the sustainable option when it comes to looking after our planet, plant-based living is also a more sustainable way of feeding the human family. A plant-based diet requires only one third of the land needed to support a meat and dairy diet. With rising global food and water insecurity due to a myriad of environmental and socio-economic problems, there's never been a better time to adopt a more sustainable way of living. Avoiding animal products is not just one of the simplest ways an individual can reduce the strain on food as well as other resources, it's the simplest way to take a stand against inefficient food systems which disproportionately affect the poorest people all over the world.
     </p>
     <p>It's time to ask ourselves: if it is now possible to live a life that involves delicious food and drink, delivers better health, leaves a smaller carbon footprint and avoids killing other creatures - then why don't we?</p>
-    <p>This website was made using React for the final project of ReDI School, Autumn 2023.</p>
-    <p>Emiliano Salazar</p>
+    <p>Source: <a href='https://www.vegansociety.com/go-vegan/why-go-vegan'>Why Go Vegan</a> from the Vegan Society</p>
+    <Footer />
   </div>
-);
+  );
+};
 
 export default About;

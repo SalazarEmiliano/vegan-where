@@ -7,6 +7,7 @@ import Map from './Map';
 import axios from 'axios';
 import Header from './Header';
 import { API_BASE_URL } from './config';
+import Footer from './Footer';
 
 const Home = () => {
   const [location, setLocation] = useState('');
@@ -222,6 +223,7 @@ const handleRestaurantClick = async (restaurantId) => {
       <RestaurantList restaurants={restaurants} onRestaurantClick={handleRestaurantClick} />
       {selectedRestaurant && <RestaurantDetail restaurant={selectedRestaurant} onClear={handleClear} />}
       <Map center={mapCenter} restaurants={restaurants} selectedRestaurant={selectedRestaurant} highlightedRestaurantId={highlightedRestaurantId} onMarkerClick={handleMarkerClick} />
+      <Footer />
     </div>
   );
 };
