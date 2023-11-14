@@ -213,7 +213,6 @@ const handleRestaurantClick = async (restaurantId) => {
   return (
     <div>
       <Header />
-      <h2>Home</h2>
       <SearchBar onSearch={handleSearch} onLocationDetect={handleDetectLocation} onClear={handleClear} />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {loading && <p>Loading...</p>}
