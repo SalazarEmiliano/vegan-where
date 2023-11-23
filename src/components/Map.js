@@ -14,7 +14,6 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
         restaurant.coordinates.latitude !== null &&
         restaurant.coordinates.longitude !== null
     );
-
     if (validRestaurants.length > 0 && mapRef.current) {
       const firstRestaurant = validRestaurants[0];
       mapRef.current.setView(
@@ -27,7 +26,6 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
   const handleMarkerClick = (restaurant) => {
     onMarkerClick(restaurant);
     const { latitude, longitude } = restaurant.coordinates;
-
     if (mapRef.current) {
       mapRef.current.setView([latitude, longitude], 15);
     }

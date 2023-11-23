@@ -36,9 +36,6 @@ const Home = () => {
       if (coordinates && coordinates.latitude && coordinates.longitude) {
         searchLocation = `${coordinates.latitude},${coordinates.longitude}`;
       }
-
-      console.log('Search Location:', searchLocation);
-
       const response = await axios.get(`${API_BASE_URL}/yelp`, {
         params: {
           term: 'vegan',
@@ -46,8 +43,6 @@ const Home = () => {
           limit: 50,
         },
       });
-
-      console.log('API Response:', response);
 
       if (response.status === 200) {
         const allRestaurants = response.data;
@@ -82,9 +77,6 @@ const Home = () => {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
-
-            console.log('Detected Location:', { latitude, longitude });
-
             await handleSearch(`${latitude},${longitude}`);
           },
           (error) => {
@@ -103,13 +95,13 @@ const Home = () => {
   };
 
   const handleRestaurantClick = async (restaurantId) => {
-      console.log('Clicked restaurant from the list:', restaurantId);
 
   if (selectedRestaurant && selectedRestaurant.id === restaurantId) {
     setSelectedRestaurant(null);
     setHighlightedRestaurantId(null);
   } else {
     const selected = restaurants.find((restaurant) => restaurant.id === restaurantId);
+
     setSelectedRestaurant(selected);
     setHighlightedRestaurantId(restaurantId);
 
@@ -120,25 +112,18 @@ const Home = () => {
       setSelectedRestaurant(detailedRestaurant);
       setHighlightedRestaurantId(restaurantId);
 
+
       setMapCenter([
         selected.coordinates.latitude,
         selected.coordinates.longitude,
       ]);
 
-      console.log('Map center updated:', [
-    selected.coordinates.latitude,
-    selected.coordinates.longitude,
-  ]);
-
+      handleMarkerClick(selected);
     } catch (error) {
       console.error('Error fetching detailed information:', error);
     }
   }
 };
-
-
-
-
 
   const handleClear = () => {
     setLocation('');
@@ -217,6 +202,8 @@ const Home = () => {
   const handleMarkerClick = (restaurant) => {
     setSelectedRestaurant(restaurant);
     setHighlightedRestaurantId(restaurant.id);
+    const { latitude, longitude } = restaurant.coordinates;
+    setMapCenter([latitude, longitude]);
   };
 
   return (
