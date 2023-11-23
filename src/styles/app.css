@@ -1,42 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* app.css */
 body {
   margin: 0;
@@ -47,7 +8,7 @@ body {
 /* Header styles */
 h1 {
   text-align: center;
-  color: #2ecc71;
+  color: #cc4e2e;
   margin: 20px 0;
 }
 
@@ -69,10 +30,11 @@ input {
 }
 
 button {
+  margin: 0 5px;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #2ecc71;
+  background-color: #cc4e2e;
   color: white;
   border: none;
   border-radius: 5px;
@@ -127,31 +89,6 @@ a {
 
 a:hover {
   background-color: #c9bfbf;
-}
-
-/* Header styles */
-h1 {
-  text-align: center;
-  color: #2ecc71;
-  margin: 20px 0;
-}
-
-/* Home page styles */
-#home-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Map styles */
-#map-container {
-  max-width: 800px;
-  margin: 20px auto;
-  background-color: #fff;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive styles */
