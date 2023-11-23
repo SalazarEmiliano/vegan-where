@@ -8,6 +8,8 @@ import axios from 'axios';
 import Header from './Header';
 import { API_BASE_URL } from './config';
 import Footer from './Footer';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
   const [location, setLocation] = useState('');
@@ -18,7 +20,6 @@ const Home = () => {
   const [searched, setSearched] = useState(false);
   const [mapCenter, setMapCenter] = useState([48.104796, 11.588756]);
   const [highlightedRestaurantId, setHighlightedRestaurantId] = useState(null);
-
 
   const handleSearch = async (newLocation, coordinates) => {
     setLocation(newLocation);
@@ -62,10 +63,24 @@ const Home = () => {
           setMapCenter([firstRestaurant.coordinates.latitude, firstRestaurant.coordinates.longitude]);
         }
       } else {
-        setError('City not found. Please try a different location.');
+        toast.error('City not found. Please try a different location.', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       }
     } catch (error) {
-      setError('City not found. Please try a different location.');
+      toast.error('City not found. Please try a different location.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } finally {
       setLoading(false);
     }
@@ -95,35 +110,31 @@ const Home = () => {
   };
 
   const handleRestaurantClick = async (restaurantId) => {
+    if (selectedRestaurant && selectedRestaurant.id === restaurantId) {
+      setSelectedRestaurant(null);
+      setHighlightedRestaurantId(null);
+    } else {
+      const selected = restaurants.find((restaurant) => restaurant.id === restaurantId);
 
-  if (selectedRestaurant && selectedRestaurant.id === restaurantId) {
-    setSelectedRestaurant(null);
-    setHighlightedRestaurantId(null);
-  } else {
-    const selected = restaurants.find((restaurant) => restaurant.id === restaurantId);
-
-    setSelectedRestaurant(selected);
-    setHighlightedRestaurantId(restaurantId);
-
-    try {
-      const response = await axios.get(`${API_BASE_URL}/yelp/${restaurantId}`);
-      const detailedRestaurant = response.data;
-
-      setSelectedRestaurant(detailedRestaurant);
+      setSelectedRestaurant(selected);
       setHighlightedRestaurantId(restaurantId);
 
+      try {
+        const response = await axios.get(`${API_BASE_URL}/yelp/${restaurantId}`);
+        const detailedRestaurant = response.data;
 
-      setMapCenter([
-        selected.coordinates.latitude,
-        selected.coordinates.longitude,
-      ]);
+        setSelectedRestaurant(detailedRestaurant);
+        setHighlightedRestaurantId(restaurantId);
 
-      handleMarkerClick(selected);
-    } catch (error) {
-      console.error('Error fetching detailed information:', error);
+        setMapCenter([
+          selected.coordinates.latitude,
+          selected.coordinates.longitude,
+        ]);
+      } catch (error) {
+        console.error('Error fetching detailed information:', error);
+      }
     }
-  }
-};
+  };
 
   const handleClear = () => {
     setLocation('');
@@ -137,6 +148,8 @@ const Home = () => {
   };
 
   useEffect(() => {
+    console.log('Effect triggered with location:', location);
+
     let timeoutId;
 
     const fetchData = async () => {
