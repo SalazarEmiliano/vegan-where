@@ -1,5 +1,3 @@
-// Map.js
-
 import React, { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -28,6 +26,11 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
 
   const handleMarkerClick = (restaurant) => {
     onMarkerClick(restaurant);
+    const { latitude, longitude } = restaurant.coordinates;
+
+    if (mapRef.current) {
+      mapRef.current.setView([latitude, longitude], 15);
+    }
   };
 
   return (
@@ -67,7 +70,7 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
               >
                 {isHighlighted && (
                   <Popup>
-                    <div>Highlighted Restaurant</div>
+                    <div>{restaurant.name}</div>
                   </Popup>
                 )}
               </Marker>

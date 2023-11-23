@@ -18,7 +18,6 @@ const Home = () => {
   const [searched, setSearched] = useState(false);
   const [mapCenter, setMapCenter] = useState([48.104796, 11.588756]);
   const [highlightedRestaurantId, setHighlightedRestaurantId] = useState(null);
-  const yelpApiKey = 'R8WSkYG06Wtag3IPuiRtKmiO0GPVz3gTJ5YJDHn8PXuXmmhZPG91_YPXdbEHwOoLonoHF8_vJpHoxjD2ZjsD4zdpQlGMq7bRwB5HBrQcCWH7Kc7GyvcbeDsV2HcoZXYx';
 
 
   const handleSearch = async (newLocation, coordinates) => {
@@ -103,7 +102,9 @@ const Home = () => {
     }
   };
 
-const handleRestaurantClick = async (restaurantId) => {
+  const handleRestaurantClick = async (restaurantId) => {
+      console.log('Clicked restaurant from the list:', restaurantId);
+
   if (selectedRestaurant && selectedRestaurant.id === restaurantId) {
     setSelectedRestaurant(null);
     setHighlightedRestaurantId(null);
@@ -113,22 +114,30 @@ const handleRestaurantClick = async (restaurantId) => {
     setHighlightedRestaurantId(restaurantId);
 
     try {
-      const headers = {
-        Authorization: `Bearer ${yelpApiKey}`,
-      };
-      const response = await axios.get(`${API_BASE_URL}/yelp/${restaurantId}`, { headers });
+      const response = await axios.get(`${API_BASE_URL}/yelp/${restaurantId}`);
       const detailedRestaurant = response.data;
 
       setSelectedRestaurant(detailedRestaurant);
       setHighlightedRestaurantId(restaurantId);
 
-      console.log('Detailed Restaurant:', detailedRestaurant);
-      console.log('Response:', response);
+      setMapCenter([
+        selected.coordinates.latitude,
+        selected.coordinates.longitude,
+      ]);
+
+      console.log('Map center updated:', [
+    selected.coordinates.latitude,
+    selected.coordinates.longitude,
+  ]);
+
     } catch (error) {
       console.error('Error fetching detailed information:', error);
     }
   }
 };
+
+
+
 
 
   const handleClear = () => {
