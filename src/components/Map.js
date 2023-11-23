@@ -48,7 +48,7 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
 
             const icon = Leaflet.icon({
               className: isHighlighted ? 'map-icon marker-selected' : 'map-icon',
-              iconUrl: restaurant.image_url || '../../default_icon.png',
+              iconUrl: '../../default_icon.png',
               iconSize: isHighlighted ? [50, 50] : [32, 32],
               iconAnchor: isHighlighted ? [20, 40] : [16, 32],
               popupAnchor: isHighlighted ? [0, -40] : [0, -32],
