@@ -21,7 +21,7 @@ const SearchBar = ({ onSearch, onLocationDetect, onClear }) => {
     <div>
       <input
         type="text"
-        placeholder="Search for restaurants..."
+        placeholder="Insert city, address or postcode..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />

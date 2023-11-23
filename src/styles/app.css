@@ -1,25 +1,25 @@
-/* app.css */
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Verdana, sans-serif;
   background-color: #f4f4f4;
 }
 
-/* Header styles */
 h1 {
   text-align: center;
   color: #cc4e2e;
   margin: 20px 0;
+
+  @media screen and (max-width: 600px) {
+    font-size: 24px;
+  }
 }
 
-/* Home page styles */
 #home-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* SearchBar styles */
 input {
   padding: 10px;
   font-size: 16px;
@@ -27,6 +27,13 @@ input {
   margin-right: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    margin-right: 0;
+    font-size: 14px;
+    padding: 8px;
+  }
 }
 
 button {
@@ -38,9 +45,12 @@ button {
   color: white;
   border: none;
   border-radius: 5px;
+
+  @media screen and (max-width: 600px) {
+    margin: 5px 0;
+  }
 }
 
-/* RestaurantList styles */
 ul {
   list-style-type: none;
   padding: 0;
@@ -48,25 +58,32 @@ ul {
 
 li {
   margin: 10px 0;
-  padding: 20px;
+  padding: 15px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* RestaurantDetail styles */
 .restaurant-detail {
-  max-width: 800px;
+  max-width: 400px;
   margin: 0 auto;
   background-color: #fff;
-  padding: 20px;
+  padding: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  @media screen and (max-width: 600px) {
+    max-width: 100%;
+  }
 }
 
-/* Navigation styles */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 nav {
   padding: 10px 20px;
 }
@@ -76,10 +93,19 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
+
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+  }
 }
 
 li {
   float: left;
+  margin-right: 10px;
+
+  @media screen and (max-width: 600px) {
+    margin-right: 5px;
+  }
 }
 
 a {
@@ -91,10 +117,58 @@ a:hover {
   background-color: #c9bfbf;
 }
 
-/* Responsive styles */
-@media screen and (max-width: 600px) {
-  input {
-    width: 100%;
-    margin-right: 0;
+.map-and-details-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
   }
 }
+
+.restaurant-detail {
+  max-width: 600px; /* Adjusted max-width for larger screens */
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  @media screen and (max-width: 600px) {
+    max-width: 100%; /* Full width on smaller screens */
+  }
+}
+
+.restaurant-detail img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 5px;
+}
+
+/* Set a default width for the image container */
+.restaurant-detail .image-container {
+  max-width: 100%;
+}
+
+/* Adjust the width only if there is an image */
+.restaurant-detail img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 5px;
+}
+
+/* Adjust the width only if there is an image */
+.restaurant-detail img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 5px;
+}
+
+
+
+

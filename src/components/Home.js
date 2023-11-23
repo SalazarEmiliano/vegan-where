@@ -63,7 +63,7 @@ const Home = () => {
           setMapCenter([firstRestaurant.coordinates.latitude, firstRestaurant.coordinates.longitude]);
         }
       } else {
-        toast.error('City not found. Please try a different location.', {
+        toast.error('Location not found. Please try something different.', {
           position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
@@ -73,7 +73,7 @@ const Home = () => {
         });
       }
     } catch (error) {
-      toast.error('City not found. Please try a different location.', {
+      toast.error('Location not found. Please try something different.', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
@@ -148,8 +148,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log('Effect triggered with location:', location);
-
     let timeoutId;
 
     const fetchData = async () => {
@@ -190,10 +188,10 @@ const Home = () => {
             setMapCenter([firstRestaurant.coordinates.latitude, firstRestaurant.coordinates.longitude]);
           }
         } else {
-          setError('City not found. Please try a different location.');
+          setError('Location not found. Please try something different.');
         }
       } catch (error) {
-        setError('City not found. Please try a different location.');
+        setError('Location not found. Please try something different.');
       } finally {
         setLoading(false);
       }
@@ -229,8 +227,23 @@ const Home = () => {
         <p>No restaurants found. Please try a different location.</p>
       )}
       <RestaurantList restaurants={restaurants} onRestaurantClick={handleRestaurantClick} />
-      {selectedRestaurant && <RestaurantDetail restaurant={selectedRestaurant} onClear={handleClear} />}
-      <Map center={mapCenter} restaurants={restaurants} selectedRestaurant={selectedRestaurant} highlightedRestaurantId={highlightedRestaurantId} onMarkerClick={handleMarkerClick} />
+      <div className="map-and-details-container">
+  {selectedRestaurant && (
+    <div className="restaurant-detail">
+      <RestaurantDetail restaurant={selectedRestaurant} onClear={handleClear} />
+    </div>
+  )}
+  <div className="map-container">
+    <Map
+      center={mapCenter}
+      restaurants={restaurants}
+      selectedRestaurant={selectedRestaurant}
+      highlightedRestaurantId={highlightedRestaurantId}
+      onMarkerClick={handleMarkerClick}
+    />
+  </div>
+</div>
+
       <Footer />
     </div>
   );
