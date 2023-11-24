@@ -265,7 +265,6 @@ const Home = () => {
         onRestaurantClick={handleRestaurantClick}
       />
       <div className="map-and-details-container">
-        
         <div className="map-container">
           <Map
             center={mapCenter}
@@ -276,12 +275,10 @@ const Home = () => {
           />
         </div>
         {selectedRestaurant && (
-          
-            <RestaurantDetail
-              restaurant={selectedRestaurant}
-              onClear={handleClear}
-            />
-          
+          <RestaurantDetail
+            restaurant={selectedRestaurant}
+            onClear={handleClear}
+          />
         )}
       </div>
 

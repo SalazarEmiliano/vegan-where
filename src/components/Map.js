@@ -1,10 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import Leaflet from 'leaflet';
-import '../styles/map.css';
+import React, { useEffect, useRef, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import Leaflet from "leaflet";
+import "../styles/map.css";
 
-const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) => {
+const Map = ({
+  center,
+  restaurants,
+  onMarkerClick,
+  highlightedRestaurantId,
+}) => {
   const mapRef = useRef(null);
   const [clickedRestaurantId, setClickedRestaurantId] = useState(null);
 
@@ -18,13 +23,16 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
     if (validRestaurants.length > 0 && mapRef.current) {
       const firstRestaurant = validRestaurants[0];
       mapRef.current.setView(
-        [firstRestaurant.coordinates.latitude, firstRestaurant.coordinates.longitude],
+        [
+          firstRestaurant.coordinates.latitude,
+          firstRestaurant.coordinates.longitude,
+        ],
         13
       );
     }
   }, [center, restaurants]);
 
-    const handleMarkerClick = (restaurant) => {
+  const handleMarkerClick = (restaurant) => {
     onMarkerClick(restaurant);
     setClickedRestaurantId(restaurant.id);
     const { latitude, longitude } = restaurant.coordinates;
@@ -37,10 +45,14 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
     }
   };
 
-
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', overflow: 'hidden' }}>
-      <MapContainer ref={mapRef} center={center} zoom={15} style={{ height: '100vh', width: '100%' }}>
+    <div style={{ maxWidth: "800px", margin: "0 auto", overflow: "hidden" }}>
+      <MapContainer
+        ref={mapRef}
+        center={center}
+        zoom={15}
+        style={{ height: "100vh", width: "100%" }}
+      >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -54,8 +66,10 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
             const isHighlighted = highlightedRestaurantId === restaurant.id;
 
             const icon = Leaflet.icon({
-              className: isHighlighted ? 'map-icon marker-selected' : 'map-icon',
-              iconUrl: '../../default_icon.png',
+              className: isHighlighted
+                ? "map-icon marker-selected"
+                : "map-icon",
+              iconUrl: "../../default_icon.png",
               iconSize: isHighlighted ? [50, 50] : [32, 32],
               iconAnchor: isHighlighted ? [20, 40] : [16, 32],
               popupAnchor: isHighlighted ? [0, -40] : [0, -32],
@@ -73,11 +87,9 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
                   click: () => handleMarkerClick(restaurant),
                 }}
               >
-                
-                  <Popup>
-                    <div>{restaurant.name}</div>
-                  </Popup>
-                
+                <Popup>
+                  <div>{restaurant.name}</div>
+                </Popup>
               </Marker>
             );
           }
