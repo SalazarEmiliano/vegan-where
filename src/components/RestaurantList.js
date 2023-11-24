@@ -6,7 +6,7 @@ const RestaurantList = ({ restaurants, onRestaurantClick }) => {
     <div>
       <ul>
         {restaurants.map((restaurant) => (
-          <li key={restaurant.id} onClick={() => onRestaurantClick(restaurant.id)}>
+          <li className='restaurant-item' key={restaurant.id} onClick={() => onRestaurantClick(restaurant.id)}>
             {restaurant.name}
           </li>
         ))}

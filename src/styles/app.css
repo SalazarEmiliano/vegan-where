@@ -1,3 +1,7 @@
+* {
+            box-sizing: border-box;
+        }
+
 body {
   margin: 0;
   font-family: 'Segoe UI', Verdana, sans-serif;
@@ -51,7 +55,7 @@ button {
   }
 }
 
-li {
+li.restaurant-item {
   margin: 10px 0;
   padding: 15px;
   background-color: #fff;
@@ -80,7 +84,7 @@ ul {
   }
 }
 
-li {
+li.restaurant-item {
   float: left;
   margin-right: 10px;
 
@@ -89,13 +93,18 @@ li {
   }
 }
 
+li.restaurant-item:hover {
+  background-color: #c9bfbf;
+  cursor: pointer;
+}
+
 a {
   color: #000;
   text-decoration: none;
 }
 
 a:hover {
-  background-color: #c9bfbf;
+  background-color: #7a3129;
 }
 
 .map-and-details-container {
@@ -150,4 +159,10 @@ a:hover {
   height: auto;
 }
 
+.content-wrapper {
+    margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 

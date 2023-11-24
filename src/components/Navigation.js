@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 const Navigation = () => (
   <nav>
     <ul>
-      <li>
+      <li className='nav-item'>
         <Link to="/">Home</Link>
       </li>
-      <li>
-        <Link to="/about">About</Link>
+      <li className='nav-item'>
+        <Link to="/about">Why Vegan?</Link>
       </li>
     </ul>
   </nav>

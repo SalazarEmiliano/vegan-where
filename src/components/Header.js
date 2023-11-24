@@ -1,13 +1,13 @@
 // Header.js
 import React from 'react';
 import Navigation from './Navigation';
+import '../styles/header.css'
 
 
 const Header = () => {
   return (
     <header>
-      <Navigation />
-      <h1>Vegan Restaurant Finder</h1>
+      <Navigation />      
     </header>
   );
   

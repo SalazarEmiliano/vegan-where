@@ -239,8 +239,9 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="content-wrapper">
       <Header />
+      <h1>Vegan Restaurant Finder</h1>
       <SearchBar
         onSearch={handleSearch}
         onLocationDetect={handleDetectLocation}

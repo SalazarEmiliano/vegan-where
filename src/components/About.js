@@ -2,12 +2,14 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import '../styles/about.css';
+
 
 const About = () => {
   return(
-    <div>
+    <div className='content-wrapper'>
       <Header />
-    <h2>Vegan? Why?</h2>
+    <h2>Why Vegan?</h2>
     <h3>For the animals</h3>
     <p>Preventing the exploitation of animals is not the only reason for becoming vegan, but for many it remains the key factor in their decision to go vegan and stay vegan. Having emotional attachments with animals may form part of that reason, while many believe that all sentient creatures have a right to life and freedom. Specifics aside, avoiding animal products is one of the most obvious ways you can take a stand against animal cruelty and animal exploitation everywhere.</p>
     <h3>For your health</h3>
