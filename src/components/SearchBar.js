@@ -10,7 +10,8 @@ const SearchBar = ({ onSearch, onLocationDetect, onClear }) => {
   };
 
   const handleDetectLocation = () => {
-    onLocationDetect();
+    setSearchTerm('');
+    onLocationDetect();    
   };
 
   const handleClear = () => {

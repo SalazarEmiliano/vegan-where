@@ -49,6 +49,14 @@ const Home = () => {
       });
 
       if (response.status === 200) {
+        toast("Location detected", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         const allRestaurants = response.data;
 
         const veganRestaurants = allRestaurants.filter((restaurant) =>
@@ -209,10 +217,10 @@ const Home = () => {
             ]);
           }
         } else {
-          setError("Location not found. Please try something different.");
+          console.log("Location not found. Please try something different.");
         }
       } catch (error) {
-        setError("Location not found. Please try something different.");
+        console.log("Location not found. Please try something different.");
       } finally {
         setLoading(false);
       }
