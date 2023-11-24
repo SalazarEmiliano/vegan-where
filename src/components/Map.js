@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Leaflet from 'leaflet';
-/* import '../styles/map.css';
- */
+import '../styles/map.css';
+
 const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) => {
   const mapRef = useRef(null);
 
