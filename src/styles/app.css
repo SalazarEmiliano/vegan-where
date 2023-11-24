@@ -51,11 +51,6 @@ button {
   }
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
 li {
   margin: 10px 0;
   padding: 15px;
@@ -63,20 +58,6 @@ li {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.restaurant-detail {
-  width: 600px;
-  margin: 0 auto;
-  background-color: #fff;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-  @media screen and (max-width: 600px) {
-    width: 100%;
-  }
 }
 
 img {
@@ -128,10 +109,12 @@ a:hover {
   }
 }
 
+
+
 .restaurant-detail {
-  max-width: 100%;
+  width: 100%;
+  max-width: 600px;
   margin-left: 0;
-  margin-right: 3%;
   background-color: #fff;
   padding: 15px;
   border: 1px solid #ddd;
@@ -141,8 +124,10 @@ a:hover {
   @media screen and (min-width: 601px) {
     max-width: 48%;
     margin-left: 2%;
+    margin-right: 5%;
   }
 }
+
 
 .restaurant-detail .image-container { 
   overflow: hidden;
