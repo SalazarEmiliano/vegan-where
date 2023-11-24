@@ -66,7 +66,7 @@ li {
 }
 
 .restaurant-detail {
-  max-width: 400px;
+  width: 600px;
   margin: 0 auto;
   background-color: #fff;
   padding: 15px;
@@ -75,7 +75,7 @@ li {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
   @media screen and (max-width: 600px) {
-    max-width: 100%;
+    width: 100%;
   }
 }
 
@@ -131,6 +131,7 @@ a:hover {
 .restaurant-detail {
   max-width: 100%;
   margin-left: 0;
+  margin-right: 3%;
   background-color: #fff;
   padding: 15px;
   border: 1px solid #ddd;
