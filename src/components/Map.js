@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Leaflet from 'leaflet';
@@ -6,6 +6,7 @@ import '../styles/map.css';
 
 const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) => {
   const mapRef = useRef(null);
+  const [clickedRestaurantId, setClickedRestaurantId] = useState(null);
 
   useEffect(() => {
     const validRestaurants = restaurants.filter(
@@ -23,13 +24,19 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
     }
   }, [center, restaurants]);
 
-  const handleMarkerClick = (restaurant) => {
+    const handleMarkerClick = (restaurant) => {
     onMarkerClick(restaurant);
+    setClickedRestaurantId(restaurant.id);
     const { latitude, longitude } = restaurant.coordinates;
     if (mapRef.current) {
-      mapRef.current.setView([latitude, longitude], 15);
+      if (clickedRestaurantId === restaurant.id) {
+        mapRef.current.setView([latitude, longitude], 15);
+      } else {
+        mapRef.current.setView([latitude, longitude]);
+      }
     }
   };
+
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', overflow: 'hidden' }}>
@@ -66,11 +73,11 @@ const Map = ({ center, restaurants, onMarkerClick, highlightedRestaurantId }) =>
                   click: () => handleMarkerClick(restaurant),
                 }}
               >
-                {isHighlighted && (
+                
                   <Popup>
                     <div>{restaurant.name}</div>
                   </Popup>
-                )}
+                
               </Marker>
             );
           }

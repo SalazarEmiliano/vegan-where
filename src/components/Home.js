@@ -49,7 +49,7 @@ const Home = () => {
       });
 
       if (response.status === 200) {
-        toast("Location detected", {
+        toast("Location found", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
