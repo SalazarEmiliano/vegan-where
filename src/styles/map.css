@@ -18,3 +18,11 @@
 .map-icon {
   border-radius: 50%;
 }
+
+.map-and-details-container {
+  margin-bottom: 1rem;
+}
+
+.leaflet-container {
+  max-height: 650px;
+}
